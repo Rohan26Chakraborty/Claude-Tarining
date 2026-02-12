@@ -1,0 +1,63 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Todo } from '../types';
+
+const API_URL = '/api/todos';
+
+async function fetchTodos(): Promise<Todo[]> {
+  const res = await fetch(API_URL);
+  if (!res.ok) throw new Error('Failed to fetch todos');
+  return res.json();
+}
+
+async function addTodo(title: string): Promise<Todo> {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  });
+  if (!res.ok) throw new Error('Failed to add todo');
+  return res.json();
+}
+
+async function toggleTodo(todo: Todo): Promise<Todo> {
+  const res = await fetch(`${API_URL}/${todo.id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ completed: !todo.completed }),
+  });
+  if (!res.ok) throw new Error('Failed to toggle todo');
+  return res.json();
+}
+
+async function deleteTodo(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to delete todo');
+}
+
+export function useTodos() {
+  return useQuery({ queryKey: ['todos'], queryFn: fetchTodos });
+}
+
+export function useAddTodo() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addTodo,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+  });
+}
+
+export function useToggleTodo() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: toggleTodo,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+  });
+}
+
+export function useDeleteTodo() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteTodo,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+  });
+}
