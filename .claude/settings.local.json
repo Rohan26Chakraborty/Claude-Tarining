@@ -28,7 +28,8 @@
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining status)",
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining diff --stat)",
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining log --oneline -5)",
-      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining add my-react-app/backend/src/routes/todos.ts my-react-app/backend/src/types.ts my-react-app/frontend/src/App.tsx my-react-app/frontend/src/api/todos.ts my-react-app/frontend/src/components/AddTodo.tsx my-react-app/frontend/src/components/TodoItem.tsx my-react-app/frontend/src/components/TodoList.tsx my-react-app/frontend/src/types.ts my-react-app/frontend/src/components/ActivityLog.tsx .claude/ CLAUDE.md)"
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining add my-react-app/backend/src/routes/todos.ts my-react-app/backend/src/types.ts my-react-app/frontend/src/App.tsx my-react-app/frontend/src/api/todos.ts my-react-app/frontend/src/components/AddTodo.tsx my-react-app/frontend/src/components/TodoItem.tsx my-react-app/frontend/src/components/TodoList.tsx my-react-app/frontend/src/types.ts my-react-app/frontend/src/components/ActivityLog.tsx .claude/ CLAUDE.md)",
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining push)"
     ]
   },
   "hooks": {
