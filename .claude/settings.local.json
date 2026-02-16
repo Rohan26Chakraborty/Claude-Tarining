@@ -1,0 +1,73 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh auth status:*)",
+      "Bash(git credential-manager:*)",
+      "Bash(git config:*)",
+      "Bash(start:*)",
+      "Bash(npx ccusage@latest)",
+      "Bash(bash:*)",
+      "Bash(npm run dev:*)",
+      "Bash(del \"C:\\\\Users\\\\RohanChakraborty\\\\source\\\\repos\\\\Claude-Tarining\\\\nul\")",
+      "Bash(where:*)",
+      "Bash(npx tsc:*)",
+      "Bash(cmd //c:*)",
+      "Bash(powershell -Command \"\\(New-Object -ComObject Scripting.FileSystemObject\\).GetFile\\(''C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\bash.exe''\\).ShortPath\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/notify.ps1)",
+      "Bash(C:/PROGRA~1/Git/usr/bin/bash.exe C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.sh)",
+      "Bash(C:/PROGRA~1/Git/usr/bin/bash.exe -c \"which python 2>&1; python --version 2>&1\")",
+      "Bash(\"C:/Program Files/Git/usr/bin/bash.exe\" C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.sh)",
+      "Bash(powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.ps1)",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null; [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom, ContentType = WindowsRuntime] | Out-Null; Write-Host ''WinRT loaded successfully''\")",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show\\(''Test notification from Claude Code'', ''Claude Code''\\) | Out-Null\")",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"Get-Module -ListAvailable BurntToast | Select-Object Name,Version\")",
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining status)",
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining diff --stat)",
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining log --oneline -5)",
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining add my-react-app/backend/src/routes/todos.ts my-react-app/backend/src/types.ts my-react-app/frontend/src/App.tsx my-react-app/frontend/src/api/todos.ts my-react-app/frontend/src/components/AddTodo.tsx my-react-app/frontend/src/components/TodoItem.tsx my-react-app/frontend/src/components/TodoList.tsx my-react-app/frontend/src/types.ts my-react-app/frontend/src/components/ActivityLog.tsx .claude/ CLAUDE.md)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.ps1"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.ps1"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/changelog.ps1"
+          },
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File C:/Users/RohanChakraborty/source/repos/Claude-Tarining/.claude/hooks/notify.ps1"
+          }
+        ]
+      }
+    ]
+  }
+}
