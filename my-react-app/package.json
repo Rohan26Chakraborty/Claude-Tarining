@@ -9,9 +9,12 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "install:all": "npm run install:frontend && npm run install:backend",
-    "build": "cd frontend && npm run build"
+    "build": "cd frontend && npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "vitest": "^4.0.18"
   }
 }

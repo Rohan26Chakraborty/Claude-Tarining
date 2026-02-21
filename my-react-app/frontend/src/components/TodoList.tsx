@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { useTodos } from '../api/todos';
 import TodoItem from './TodoItem';
+import type { Status } from '../types';
 
-type Filter = 'all' | 'active' | 'completed';
+type Filter = 'all' | Status;
+
+const filters: { key: Filter; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'pending', label: 'Pending' },
+  { key: 'in-progress', label: 'In Progress' },
+  { key: 'completed', label: 'Completed' },
+];
 
 export default function TodoList() {
   const { data: todos, isLoading, error } = useTodos();
@@ -15,13 +23,13 @@ export default function TodoList() {
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <span className="font-medium">Loading todos...</span>
+        <span className="font-medium">Loading tasks...</span>
       </div>
     </div>
   );
   if (error) return (
     <div className="text-center py-8 px-4 bg-red-50 rounded-xl border border-red-200">
-      <p className="text-red-600 font-medium">Error loading todos: {error.message}</p>
+      <p className="text-red-600 font-medium">Error loading tasks: {error.message}</p>
     </div>
   );
   if (!todos || todos.length === 0) return (
@@ -34,37 +42,28 @@ export default function TodoList() {
     </div>
   );
 
-  const filtered = todos.filter((todo) => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
-    return true;
-  });
-
-  const remaining = todos.filter((t) => !t.completed).length;
-
-  const filters: { key: Filter; label: string }[] = [
-    { key: 'all', label: 'All' },
-    { key: 'active', label: 'Active' },
-    { key: 'completed', label: 'Completed' },
-  ];
+  const filtered = filter === 'all' ? todos : todos.filter((t) => t.status === filter);
+  const remaining = todos.filter((t) => t.status !== 'completed').length;
+  const inProgress = todos.filter((t) => t.status === 'in-progress').length;
 
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-600">
-            {remaining}
-          </span>
-          <span className="text-sm text-gray-400">
-            {remaining === 1 ? 'item' : 'items'} remaining
-          </span>
+          <span className="text-sm font-semibold text-gray-600">{remaining}</span>
+          <span className="text-sm text-gray-400">{remaining === 1 ? 'task' : 'tasks'} remaining</span>
+          {inProgress > 0 && (
+            <span className="text-xs font-semibold px-2 py-0.5 bg-indigo-100 text-indigo-600 rounded-full">
+              {inProgress} active
+            </span>
+          )}
         </div>
         <div className="inline-flex gap-1 p-1 bg-gray-100 rounded-xl border border-gray-200">
           {filters.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
                 filter === f.key
                   ? 'bg-white text-indigo-600 shadow-sm'
                   : 'text-gray-500 hover:text-gray-700'
@@ -82,10 +81,7 @@ export default function TodoList() {
       </ul>
       {filtered.length === 0 && (
         <div className="text-center py-8 px-4 bg-gradient-to-br from-gray-50 to-indigo-50/30 rounded-xl border border-gray-100 mt-3">
-          <svg className="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-          </svg>
-          <p className="text-gray-500 font-medium">No {filter} tasks</p>
+          <p className="text-gray-500 font-medium">No {filter === 'all' ? '' : filter} tasks</p>
         </div>
       )}
     </div>

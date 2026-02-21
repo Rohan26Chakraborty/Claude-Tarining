@@ -1,10 +1,13 @@
 import { useState, FormEvent } from 'react';
 import { useAddTodo } from '../api/todos';
-import type { Priority } from '../types';
+import type { Priority, DurationUnit } from '../types';
 
 export default function AddTodo() {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<Priority>('medium');
+  const [durationValue, setDurationValue] = useState('');
+  const [durationUnit, setDurationUnit] = useState<DurationUnit>('minutes');
   const [dueDate, setDueDate] = useState('');
   const [showOptions, setShowOptions] = useState(false);
   const addTodo = useAddTodo();
@@ -14,11 +17,21 @@ export default function AddTodo() {
     const trimmed = title.trim();
     if (!trimmed) return;
     addTodo.mutate(
-      { title: trimmed, priority, dueDate: dueDate || undefined },
+      {
+        title: trimmed,
+        description: description.trim() || undefined,
+        priority,
+        durationValue: durationValue ? Number(durationValue) : undefined,
+        durationUnit: durationValue ? durationUnit : undefined,
+        dueDate: dueDate || undefined,
+      },
       {
         onSuccess: () => {
           setTitle('');
+          setDescription('');
           setPriority('medium');
+          setDurationValue('');
+          setDurationUnit('minutes');
           setDueDate('');
           setShowOptions(false);
         },
@@ -59,28 +72,58 @@ export default function AddTodo() {
         </button>
       </div>
       {showOptions && (
-        <div className="flex flex-wrap gap-3 mt-3 p-4 bg-gradient-to-br from-gray-50 to-indigo-50/30 rounded-xl border border-gray-200/50">
-          <label className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">Priority</span>
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value as Priority)}
-              className="border-2 border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </label>
-          <label className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">Due Date</span>
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="border-2 border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
-            />
-          </label>
+        <div className="flex flex-col gap-3 mt-3 p-4 bg-gradient-to-br from-gray-50 to-indigo-50/30 rounded-xl border border-gray-200/50">
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description (optional)"
+            rows={2}
+            className="w-full border-2 border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white resize-none"
+          />
+          <div className="flex flex-wrap gap-3">
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-600">Priority</span>
+              <select
+                value={priority}
+                onChange={(e) => setPriority(e.target.value as Priority)}
+                className="border-2 border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-600">Duration</span>
+              <input
+                type="number"
+                min="1"
+                value={durationValue}
+                onChange={(e) => setDurationValue(e.target.value)}
+                placeholder="0"
+                className="w-16 border-2 border-gray-200 rounded-lg px-2 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
+              />
+              <select
+                value={durationUnit}
+                onChange={(e) => setDurationUnit(e.target.value as DurationUnit)}
+                className="border-2 border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
+              >
+                <option value="minutes">min</option>
+                <option value="hours">hrs</option>
+                <option value="days">days</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-600">Due Date</span>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="border-2 border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all bg-white"
+              />
+            </label>
+          </div>
         </div>
       )}
     </form>

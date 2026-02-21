@@ -1,52 +1,74 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Todo, ActivityLog, Priority } from '../types';
+import { Todo, ActivityLog, Priority, Status, DurationUnit } from '../types';
+import { nextStatus } from '../utils';
 
 const API_URL = '/api/todos';
 
-async function fetchTodos(): Promise<Todo[]> {
-  const res = await fetch(API_URL);
+export function authHeaders(): Record<string, string> {
+  const token = localStorage.getItem('auth_token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+export async function fetchTodos(): Promise<Todo[]> {
+  const res = await fetch(API_URL, { headers: authHeaders() });
   if (!res.ok) throw new Error('Failed to fetch todos');
   return res.json();
 }
 
-async function addTodo(data: { title: string; priority: Priority; dueDate?: string }): Promise<Todo> {
+export async function addTodo(data: {
+  title: string;
+  description?: string;
+  priority: Priority;
+  durationValue?: number;
+  durationUnit?: DurationUnit;
+  dueDate?: string;
+}): Promise<Todo> {
   const res = await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Failed to add todo');
   return res.json();
 }
 
-async function toggleTodo(todo: Todo): Promise<Todo> {
+export async function cycleStatusFn(todo: Todo): Promise<Todo> {
   const res = await fetch(`${API_URL}/${todo.id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ completed: !todo.completed }),
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    body: JSON.stringify({ status: nextStatus(todo.status) }),
   });
-  if (!res.ok) throw new Error('Failed to toggle todo');
+  if (!res.ok) throw new Error('Failed to update todo');
   return res.json();
 }
 
-async function updateTodo(data: { id: string; title?: string; priority?: Priority; dueDate?: string | null }): Promise<Todo> {
+export async function updateTodo(data: {
+  id: string;
+  title?: string;
+  description?: string;
+  priority?: Priority;
+  status?: Status;
+  durationValue?: number | null;
+  durationUnit?: DurationUnit | null;
+  dueDate?: string | null;
+}): Promise<Todo> {
   const { id, ...body } = data;
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error('Failed to update todo');
   return res.json();
 }
 
-async function deleteTodo(id: string): Promise<void> {
-  const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+export async function deleteTodo(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE', headers: authHeaders() });
   if (!res.ok) throw new Error('Failed to delete todo');
 }
 
-async function fetchActivityLogs(): Promise<ActivityLog[]> {
-  const res = await fetch(`${API_URL}/activity`);
+export async function fetchActivityLogs(): Promise<ActivityLog[]> {
+  const res = await fetch(`${API_URL}/activity`, { headers: authHeaders() });
   if (!res.ok) throw new Error('Failed to fetch activity logs');
   return res.json();
 }
@@ -66,10 +88,10 @@ export function useAddTodo() {
   });
 }
 
-export function useToggleTodo() {
+export function useCycleStatus() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: toggleTodo,
+    mutationFn: cycleStatusFn,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       queryClient.invalidateQueries({ queryKey: ['activity'] });

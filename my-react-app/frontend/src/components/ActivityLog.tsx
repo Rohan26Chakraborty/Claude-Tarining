@@ -3,6 +3,7 @@ import type { ActivityLog as ActivityLogType } from '../types';
 
 const actionLabels: Record<ActivityLogType['action'], string> = {
   created: 'Created',
+  'in-progress': 'Started',
   completed: 'Completed',
   uncompleted: 'Reopened',
   deleted: 'Deleted',
@@ -10,6 +11,7 @@ const actionLabels: Record<ActivityLogType['action'], string> = {
 
 const actionColors: Record<ActivityLogType['action'], { text: string; bg: string; dot: string }> = {
   created: { text: 'text-green-600', bg: 'bg-green-50', dot: 'bg-green-500' },
+  'in-progress': { text: 'text-indigo-600', bg: 'bg-indigo-50', dot: 'bg-indigo-500' },
   completed: { text: 'text-blue-600', bg: 'bg-blue-50', dot: 'bg-blue-500' },
   uncompleted: { text: 'text-amber-600', bg: 'bg-amber-50', dot: 'bg-amber-500' },
   deleted: { text: 'text-red-600', bg: 'bg-red-50', dot: 'bg-red-500' },
