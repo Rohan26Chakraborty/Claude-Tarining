@@ -1,0 +1,6 @@
+[     494ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos:0
+[     522ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos/activity:0
+[    1506ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos:0
+[    1532ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos/activity:0
+[    3517ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos:0
+[    3544ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/todos/activity:0

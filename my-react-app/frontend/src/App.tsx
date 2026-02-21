@@ -29,8 +29,25 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-violet-50 text-gray-800 font-sans">
-      <div className="max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-950 via-violet-950 to-purple-950 text-gray-800 font-sans">
+
+      {/* Dot-grid SVG pattern layer */}
+      <div
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23a5b4fc'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+        }}
+      />
+
+      {/* Radial glow — top-left */}
+      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-indigo-600/30 blur-3xl pointer-events-none" />
+
+      {/* Radial glow — bottom-right */}
+      <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-violet-600/25 blur-3xl pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-indigo-100/50 p-8 sm:p-10">
           <div className="mb-8 flex items-start justify-between">
             <div className="flex-1">
@@ -54,3 +71,4 @@ export default function App() {
     </div>
   );
 }
+

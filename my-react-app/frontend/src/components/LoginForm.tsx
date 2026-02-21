@@ -55,8 +55,20 @@ export default function LoginForm({ onLogin }: Props) {
   const isLogin = mode === 'login';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-violet-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-indigo-100/50 p-8 sm:p-10">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-950 via-violet-950 to-purple-950 flex items-center justify-center px-4">
+      {/* Dot-grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23a5b4fc'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+        }}
+      />
+      {/* Radial glows */}
+      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-indigo-600/30 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-violet-600/25 blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-md bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-indigo-100/50 p-8 sm:p-10">
         <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent mb-2">
           {isLogin ? 'Welcome back' : 'Create account'}
         </h1>
@@ -143,3 +155,4 @@ export default function LoginForm({ onLogin }: Props) {
     </div>
   );
 }
+

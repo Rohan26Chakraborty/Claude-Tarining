@@ -29,7 +29,20 @@
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining diff --stat)",
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining log --oneline -5)",
       "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining add my-react-app/backend/src/routes/todos.ts my-react-app/backend/src/types.ts my-react-app/frontend/src/App.tsx my-react-app/frontend/src/api/todos.ts my-react-app/frontend/src/components/AddTodo.tsx my-react-app/frontend/src/components/TodoItem.tsx my-react-app/frontend/src/components/TodoList.tsx my-react-app/frontend/src/types.ts my-react-app/frontend/src/components/ActivityLog.tsx .claude/ CLAUDE.md)",
-      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining push)"
+      "Bash(git -C /c/Users/RohanChakraborty/source/repos/Claude-Tarining push)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_type",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(ls /c/Users/RohanChakraborty/source/repos/Claude-Tarining/my-react-app/node_modules | grep -E \"supertest|jsdom|happy-dom|testing-library\" 2>/dev/null; cat /c/Users/RohanChakraborty/source/repos/Claude-Tarining/my-react-app/node_modules/vitest/package.json | python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('peerDependencies',{}\\), indent=2\\)\\)\" 2>/dev/null)",
+      "Bash(node:*)",
+      "Bash(cd /c/Users/RohanChakraborty/source/repos/Claude-Tarining/my-react-app && npm test 2>&1)",
+      "Skill(ralph-loop:ralph-loop)",
+      "mcp__plugin_playwright_playwright__browser_snapshot"
     ]
   },
   "hooks": {

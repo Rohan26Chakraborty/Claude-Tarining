@@ -1,0 +1,16 @@
+[   40053ms] TypeError: Cannot read properties of undefined (reading 'dot')
+    at http://localhost:5173/src/components/ActivityLog.tsx?t=1771685277435:79:101
+    at Array.map (<anonymous>)
+    at ActivityLog (http://localhost:5173/src/components/ActivityLog.tsx?t=1771685277435:71:173)
+    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:17422:20)
+    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:4204:24)
+    at updateFunctionComponent (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:6617:21)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:7652:20)
+    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:1483:72)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:10866:98)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:10726:43)
+[   40053ms] [WARNING] %s
+
+%s
+ An error occurred in the <ActivityLog> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=8ccbb053:6226
