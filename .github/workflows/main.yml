@@ -27,13 +27,13 @@ jobs:
             my-react-app/backend/package-lock.json
 
       - name: Install dependencies
-        run: npm run install:all
+        run: npm install && npm run install:all
 
       - name: Lint
         run: cd frontend && npm run lint
 
       - name: Test
-        run: npm run test -- --run
+        run: npm test
 
       - name: Build
         run: npm run build
@@ -42,7 +42,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-react-app/dist
+          path: my-react-app/frontend/dist
 
   deploy:
     name: Deploy to GitHub Pages
