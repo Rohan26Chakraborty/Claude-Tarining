@@ -8,6 +8,8 @@ const router = Router();
 const users: User[] = [];
 // token → userId
 export const activeSessions = new Map<string, string>();
+// resetToken → { userId, expiresAt }
+const resetTokens = new Map<string, { userId: string; expiresAt: number }>();
 
 // Simple reversible hash (no bcrypt available)
 function hashPassword(password: string): string {
@@ -73,6 +75,46 @@ router.post('/login', (req: Request, res: Response) => {
 router.post('/logout', (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (token) activeSessions.delete(token);
+  res.json({ success: true });
+});
+
+// POST /api/auth/forgot-password
+router.post('/forgot-password', (req: Request, res: Response) => {
+  const { email } = req.body as { email?: string };
+  if (!email?.trim()) {
+    res.status(400).json({ error: 'Email is required' });
+    return;
+  }
+  const user = users.find(u => u.email === email.trim().toLowerCase());
+  // Always respond success to avoid email enumeration
+  if (user) {
+    const resetToken = uuidv4();
+    resetTokens.set(resetToken, { userId: user.id, expiresAt: Date.now() + 15 * 60 * 1000 });
+    res.json({ resetToken }); // In production this would be emailed
+  } else {
+    res.json({ resetToken: null });
+  }
+});
+
+// POST /api/auth/reset-password
+router.post('/reset-password', (req: Request, res: Response) => {
+  const { token, newPassword } = req.body as { token?: string; newPassword?: string };
+  if (!token || !newPassword) {
+    res.status(400).json({ error: 'Token and new password are required' });
+    return;
+  }
+  const entry = resetTokens.get(token);
+  if (!entry || entry.expiresAt < Date.now()) {
+    res.status(400).json({ error: 'Invalid or expired reset token' });
+    return;
+  }
+  const user = users.find(u => u.id === entry.userId);
+  if (!user) {
+    res.status(400).json({ error: 'User not found' });
+    return;
+  }
+  user.passwordHash = hashPassword(newPassword);
+  resetTokens.delete(token);
   res.json({ success: true });
 });
 
