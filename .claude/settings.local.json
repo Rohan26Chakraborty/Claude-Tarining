@@ -42,7 +42,12 @@
       "Bash(node:*)",
       "Bash(cd /c/Users/RohanChakraborty/source/repos/Claude-Tarining/my-react-app && npm test 2>&1)",
       "Skill(ralph-loop:ralph-loop)",
-      "mcp__plugin_playwright_playwright__browser_snapshot"
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "Bash(cd:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
     ]
   },
   "hooks": {
