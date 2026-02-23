@@ -47,7 +47,9 @@
       "Bash(gh run list:*)",
       "Bash(gh:*)",
       "Bash(netstat:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(true:*)",
+      "Bash(curl:*)"
     ]
   },
   "hooks": {
